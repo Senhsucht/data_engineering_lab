@@ -25,6 +25,10 @@ Practicar los conceptos clave de un flujo **ETL**:
 
 1. [**Ejercicio 1**:Limpieza de CSV](notebooks/etl_ejercicio1.ipynb)
 2. [**Ejercicio 2**:Agregación de Datos](notebooks/etl_ejercicio2.ipynb)
+3. [**Ejercicio 3**:Unión de Tablas y Agregación](notebooks/etl_ejercicio3.ipynb)
+
+---
+
 
 ## ⚙️ Requisitos
 
