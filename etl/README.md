@@ -26,6 +26,8 @@ Practicar los conceptos clave de un flujo **ETL**:
 1. [**Ejercicio 1**:Limpieza de CSV](notebooks/etl_ejercicio1.ipynb)
 2. [**Ejercicio 2**:Agregación de Datos](notebooks/etl_ejercicio2.ipynb)
 3. [**Ejercicio 3**:Unión de Tablas y Agregación](notebooks/etl_ejercicio3.ipynb)
+4. [**Ejercicio 4**:pivot_table y Análisis Avanzado](notebooks/etl_ejercicio4.ipynb)
+
 
 ---
 
@@ -52,6 +54,7 @@ Practicar los conceptos clave de un flujo **ETL**:
 ---
 ## 📖 Notas
 
+- Muchos de los ejercicios se le solicitaron a IA para que generen, hay ocaciones donde no estan del todo bien declarados los ejercicios.
 - Cada ejercicio tiene su propio script o notebook.
 - Los datasets son de uso educativo.
 - Este proyecto está pensado únicamente para práctica personal.
