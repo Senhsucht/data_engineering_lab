@@ -1,0 +1,7 @@
+venta_id,cliente_id,producto,categoria,precio,fecha
+1,101,Laptop,Electrónica,1200,2025-01-15
+2,102,Mouse,Electrónica,20,2025-01-16
+3,103,Silla,Hogar,150,2025-01-17
+4,101,Teclado,Electrónica,35,2025-02-02
+5,104,Mesa,Hogar,300,2025-02-05
+6,102,Aspiradora,Hogar,200,2025-03-10

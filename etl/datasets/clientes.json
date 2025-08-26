@@ -1,0 +1,6 @@
+[
+  {"cliente_id": 101, "nombre": "Ana", "ciudad": "CDMX"},
+  {"cliente_id": 102, "nombre": "Luis", "ciudad": "Guadalajara"},
+  {"cliente_id": 103, "nombre": "Marta", "ciudad": "Monterrey"},
+  {"cliente_id": 104, "nombre": "Jorge", "ciudad": "Puebla"}
+]
