@@ -1,0 +1,641 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "df-dataeng-lab"
+		},
+		"flights_sources_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'flights_sources'"
+		},
+		"flights_sources_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://stdataenglab001.dfs.core.windows.net/"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/flights_sources')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('flights_sources_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('flights_sources_accountKey')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Parquet1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "flights_sources",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "output",
+						"fileSystem": "flights"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/flights_sources')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/flights_feb')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "flights_sources",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "Feb_2020_ontime.csv",
+						"folderPath": "raw",
+						"fileSystem": "flights"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "DAY_OF_MONTH",
+						"type": "String"
+					},
+					{
+						"name": "DAY_OF_WEEK",
+						"type": "String"
+					},
+					{
+						"name": "OP_UNIQUE_CARRIER",
+						"type": "String"
+					},
+					{
+						"name": "OP_CARRIER_AIRLINE_ID",
+						"type": "String"
+					},
+					{
+						"name": "OP_CARRIER",
+						"type": "String"
+					},
+					{
+						"name": "TAIL_NUM",
+						"type": "String"
+					},
+					{
+						"name": "OP_CARRIER_FL_NUM",
+						"type": "String"
+					},
+					{
+						"name": "ORIGIN_AIRPORT_ID",
+						"type": "String"
+					},
+					{
+						"name": "ORIGIN_AIRPORT_SEQ_ID",
+						"type": "String"
+					},
+					{
+						"name": "ORIGIN",
+						"type": "String"
+					},
+					{
+						"name": "DEST_AIRPORT_ID",
+						"type": "String"
+					},
+					{
+						"name": "DEST_AIRPORT_SEQ_ID",
+						"type": "String"
+					},
+					{
+						"name": "DEST",
+						"type": "String"
+					},
+					{
+						"name": "DEP_TIME",
+						"type": "String"
+					},
+					{
+						"name": "DEP_DEL15",
+						"type": "String"
+					},
+					{
+						"name": "DEP_TIME_BLK",
+						"type": "String"
+					},
+					{
+						"name": "ARR_TIME",
+						"type": "String"
+					},
+					{
+						"name": "ARR_DEL15",
+						"type": "String"
+					},
+					{
+						"name": "CANCELLED",
+						"type": "String"
+					},
+					{
+						"name": "DIVERTED",
+						"type": "String"
+					},
+					{
+						"name": "DISTANCE",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/flights_sources')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/flights_jan')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "flights_sources",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "Jan_2020_ontime.csv",
+						"folderPath": "raw",
+						"fileSystem": "flights"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "DAY_OF_MONTH",
+						"type": "String"
+					},
+					{
+						"name": "DAY_OF_WEEK",
+						"type": "String"
+					},
+					{
+						"name": "OP_UNIQUE_CARRIER",
+						"type": "String"
+					},
+					{
+						"name": "OP_CARRIER_AIRLINE_ID",
+						"type": "String"
+					},
+					{
+						"name": "OP_CARRIER",
+						"type": "String"
+					},
+					{
+						"name": "TAIL_NUM",
+						"type": "String"
+					},
+					{
+						"name": "OP_CARRIER_FL_NUM",
+						"type": "String"
+					},
+					{
+						"name": "ORIGIN_AIRPORT_ID",
+						"type": "String"
+					},
+					{
+						"name": "ORIGIN_AIRPORT_SEQ_ID",
+						"type": "String"
+					},
+					{
+						"name": "ORIGIN",
+						"type": "String"
+					},
+					{
+						"name": "DEST_AIRPORT_ID",
+						"type": "String"
+					},
+					{
+						"name": "DEST_AIRPORT_SEQ_ID",
+						"type": "String"
+					},
+					{
+						"name": "DEST",
+						"type": "String"
+					},
+					{
+						"name": "DEP_TIME",
+						"type": "String"
+					},
+					{
+						"name": "DEP_DEL15",
+						"type": "String"
+					},
+					{
+						"name": "DEP_TIME_BLK",
+						"type": "String"
+					},
+					{
+						"name": "ARR_TIME",
+						"type": "String"
+					},
+					{
+						"name": "ARR_DEL15",
+						"type": "String"
+					},
+					{
+						"name": "CANCELLED",
+						"type": "String"
+					},
+					{
+						"name": "DIVERTED",
+						"type": "String"
+					},
+					{
+						"name": "DISTANCE",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/flights_sources')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/flights_mar')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "flights_sources",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "March_2020_ontime.csv",
+						"folderPath": "raw",
+						"fileSystem": "flights"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "DAY_OF_MONTH",
+						"type": "String"
+					},
+					{
+						"name": "DAY_OF_WEEK",
+						"type": "String"
+					},
+					{
+						"name": "OP_UNIQUE_CARRIER",
+						"type": "String"
+					},
+					{
+						"name": "OP_CARRIER_AIRLINE_ID",
+						"type": "String"
+					},
+					{
+						"name": "OP_CARRIER",
+						"type": "String"
+					},
+					{
+						"name": "TAIL_NUM",
+						"type": "String"
+					},
+					{
+						"name": "OP_CARRIER_FL_NUM",
+						"type": "String"
+					},
+					{
+						"name": "ORIGIN_AIRPORT_ID",
+						"type": "String"
+					},
+					{
+						"name": "ORIGIN_AIRPORT_SEQ_ID",
+						"type": "String"
+					},
+					{
+						"name": "ORIGIN",
+						"type": "String"
+					},
+					{
+						"name": "DEST_AIRPORT_ID",
+						"type": "String"
+					},
+					{
+						"name": "DEST_AIRPORT_SEQ_ID",
+						"type": "String"
+					},
+					{
+						"name": "DEST",
+						"type": "String"
+					},
+					{
+						"name": "DEP_TIME",
+						"type": "String"
+					},
+					{
+						"name": "DEP_DEL15",
+						"type": "String"
+					},
+					{
+						"name": "DEP_TIME_BLK",
+						"type": "String"
+					},
+					{
+						"name": "ARR_TIME",
+						"type": "String"
+					},
+					{
+						"name": "ARR_DEL15",
+						"type": "String"
+					},
+					{
+						"name": "CANCELLED",
+						"type": "String"
+					},
+					{
+						"name": "DIVERTED",
+						"type": "String"
+					},
+					{
+						"name": "DISTANCE",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/flights_sources')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow1')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "flights_jan",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						},
+						{
+							"dataset": {
+								"referenceName": "flights_feb",
+								"type": "DatasetReference"
+							},
+							"name": "source2"
+						},
+						{
+							"dataset": {
+								"referenceName": "flights_mar",
+								"type": "DatasetReference"
+							},
+							"name": "source3"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "Parquet1",
+								"type": "DatasetReference"
+							},
+							"name": "flights"
+						}
+					],
+					"transformations": [
+						{
+							"name": "select1"
+						},
+						{
+							"name": "aggregate1"
+						},
+						{
+							"name": "filter1"
+						},
+						{
+							"name": "union1"
+						},
+						{
+							"name": "cast1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          DAY_OF_MONTH as string,",
+						"          DAY_OF_WEEK as string,",
+						"          OP_UNIQUE_CARRIER as string,",
+						"          OP_CARRIER_AIRLINE_ID as string,",
+						"          OP_CARRIER as string,",
+						"          TAIL_NUM as string,",
+						"          OP_CARRIER_FL_NUM as string,",
+						"          ORIGIN_AIRPORT_ID as string,",
+						"          ORIGIN_AIRPORT_SEQ_ID as string,",
+						"          ORIGIN as string,",
+						"          DEST_AIRPORT_ID as string,",
+						"          DEST_AIRPORT_SEQ_ID as string,",
+						"          DEST as string,",
+						"          DEP_TIME as string,",
+						"          DEP_DEL15 as string,",
+						"          DEP_TIME_BLK as string,",
+						"          ARR_TIME as string,",
+						"          ARR_DEL15 as string,",
+						"          CANCELLED as string,",
+						"          DIVERTED as string,",
+						"          DISTANCE as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false,",
+						"     wildcardPaths:['Active']) ~> source1",
+						"source(output(",
+						"          DAY_OF_MONTH as string,",
+						"          DAY_OF_WEEK as string,",
+						"          OP_UNIQUE_CARRIER as string,",
+						"          OP_CARRIER_AIRLINE_ID as string,",
+						"          OP_CARRIER as string,",
+						"          TAIL_NUM as string,",
+						"          OP_CARRIER_FL_NUM as string,",
+						"          ORIGIN_AIRPORT_ID as string,",
+						"          ORIGIN_AIRPORT_SEQ_ID as string,",
+						"          ORIGIN as string,",
+						"          DEST_AIRPORT_ID as string,",
+						"          DEST_AIRPORT_SEQ_ID as string,",
+						"          DEST as string,",
+						"          DEP_TIME as string,",
+						"          DEP_DEL15 as string,",
+						"          DEP_TIME_BLK as string,",
+						"          ARR_TIME as string,",
+						"          ARR_DEL15 as string,",
+						"          CANCELLED as string,",
+						"          DIVERTED as string,",
+						"          DISTANCE as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> source2",
+						"source(output(",
+						"          DAY_OF_MONTH as string,",
+						"          DAY_OF_WEEK as string,",
+						"          OP_UNIQUE_CARRIER as string,",
+						"          OP_CARRIER_AIRLINE_ID as string,",
+						"          OP_CARRIER as string,",
+						"          TAIL_NUM as string,",
+						"          OP_CARRIER_FL_NUM as string,",
+						"          ORIGIN_AIRPORT_ID as string,",
+						"          ORIGIN_AIRPORT_SEQ_ID as string,",
+						"          ORIGIN as string,",
+						"          DEST_AIRPORT_ID as string,",
+						"          DEST_AIRPORT_SEQ_ID as string,",
+						"          DEST as string,",
+						"          DEP_TIME as string,",
+						"          DEP_DEL15 as string,",
+						"          DEP_TIME_BLK as string,",
+						"          ARR_TIME as string,",
+						"          ARR_DEL15 as string,",
+						"          CANCELLED as string,",
+						"          DIVERTED as string,",
+						"          DISTANCE as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> source3",
+						"union1 select(mapColumn(",
+						"          OP_CARRIER,",
+						"          ORIGIN,",
+						"          DEST,",
+						"          DEP_DEL15,",
+						"          ARR_DEL15",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> select1",
+						"cast1 aggregate(groupBy(OP_CARRIER,",
+						"          ORIGIN,",
+						"          DEST),",
+						"     total_flights = count(),",
+						"          departure_delayed_flights = sum(DEP_DEL15),",
+						"          arrival_delayed_flights = sum(ARR_DEL15),",
+						"          departure_delay_percentage = sum(DEP_DEL15)/count(),",
+						"          arrival_delay_percentage = sum(ARR_DEL15)/count()) ~> aggregate1",
+						"select1 filter(!isNull(DEP_DEL15)&&!isNull(ARR_DEL15)) ~> filter1",
+						"source1, source2, source3 union(byName: true)~> union1",
+						"filter1 cast(output(",
+						"          DEP_DEL15 as integer '000',",
+						"          ARR_DEL15 as integer '000'",
+						"     ),",
+						"     errors: true) ~> cast1",
+						"aggregate1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     format: 'parquet',",
+						"     filePattern:'flights.parquet',",
+						"     umask: 0022,",
+						"     preCommands: [],",
+						"     postCommands: [],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     partitionBy('key',",
+						"          0,",
+						"          OP_CARRIER,",
+						"          ORIGIN,",
+						"          DEST",
+						"     )) ~> flights"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/flights_jan')]",
+				"[concat(variables('factoryId'), '/datasets/flights_feb')]",
+				"[concat(variables('factoryId'), '/datasets/flights_mar')]",
+				"[concat(variables('factoryId'), '/datasets/Parquet1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pl_flights_delay')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "dataflow1",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dataflow1",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"source1": {},
+									"source2": {},
+									"source3": {},
+									"flights": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/dataflow1')]"
+			]
+		}
+	]
+}
