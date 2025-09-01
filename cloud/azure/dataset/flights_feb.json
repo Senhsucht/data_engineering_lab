@@ -1,0 +1,109 @@
+{
+	"name": "flights_feb",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "flights_sources",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "Feb_2020_ontime.csv",
+				"folderPath": "raw",
+				"fileSystem": "flights"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "DAY_OF_MONTH",
+				"type": "String"
+			},
+			{
+				"name": "DAY_OF_WEEK",
+				"type": "String"
+			},
+			{
+				"name": "OP_UNIQUE_CARRIER",
+				"type": "String"
+			},
+			{
+				"name": "OP_CARRIER_AIRLINE_ID",
+				"type": "String"
+			},
+			{
+				"name": "OP_CARRIER",
+				"type": "String"
+			},
+			{
+				"name": "TAIL_NUM",
+				"type": "String"
+			},
+			{
+				"name": "OP_CARRIER_FL_NUM",
+				"type": "String"
+			},
+			{
+				"name": "ORIGIN_AIRPORT_ID",
+				"type": "String"
+			},
+			{
+				"name": "ORIGIN_AIRPORT_SEQ_ID",
+				"type": "String"
+			},
+			{
+				"name": "ORIGIN",
+				"type": "String"
+			},
+			{
+				"name": "DEST_AIRPORT_ID",
+				"type": "String"
+			},
+			{
+				"name": "DEST_AIRPORT_SEQ_ID",
+				"type": "String"
+			},
+			{
+				"name": "DEST",
+				"type": "String"
+			},
+			{
+				"name": "DEP_TIME",
+				"type": "String"
+			},
+			{
+				"name": "DEP_DEL15",
+				"type": "String"
+			},
+			{
+				"name": "DEP_TIME_BLK",
+				"type": "String"
+			},
+			{
+				"name": "ARR_TIME",
+				"type": "String"
+			},
+			{
+				"name": "ARR_DEL15",
+				"type": "String"
+			},
+			{
+				"name": "CANCELLED",
+				"type": "String"
+			},
+			{
+				"name": "DIVERTED",
+				"type": "String"
+			},
+			{
+				"name": "DISTANCE",
+				"type": "String"
+			}
+		]
+	}
+}
