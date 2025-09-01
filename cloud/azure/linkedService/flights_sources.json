@@ -1,0 +1,11 @@
+{
+	"name": "flights_sources",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureBlobFS",
+		"typeProperties": {
+			"sasUri": "https://stdataenglab001.blob.core.windows.net/flights?sp=rcw&st=2025-09-01T02:18:21Z&se=2025-09-07T10:33:21Z&spr=https&sv=2024-11-04&sr=c&sig=nbu%2FaI4p0OKTKURoFsGGjif%2FIoFHicIiXW9GDEllssQ%3D?sp=rcw&st=2025-09-01T02:18:21Z&se=2025-09-07T10:33:21Z&spr=https&sv=2024-11-04&sr=c&sig=nbu%2FaI4p0OKTKURoFsGGjif%2FIoFHicIiXW9GDEllssQ%3D"
+		}
+	}
+}
