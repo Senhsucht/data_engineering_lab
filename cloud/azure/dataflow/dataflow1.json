@@ -6,13 +6,6 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "flights_jan",
-						"type": "DatasetReference"
-					},
-					"name": "source1"
-				},
-				{
-					"dataset": {
 						"referenceName": "flights_feb",
 						"type": "DatasetReference"
 					},
@@ -24,6 +17,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "source3"
+				},
+				{
+					"dataset": {
+						"referenceName": "flights_jan",
+						"type": "DatasetReference"
+					},
+					"name": "source4"
 				}
 			],
 			"sinks": [
@@ -78,32 +78,6 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> source1",
-				"source(output(",
-				"          DAY_OF_MONTH as string,",
-				"          DAY_OF_WEEK as string,",
-				"          OP_UNIQUE_CARRIER as string,",
-				"          OP_CARRIER_AIRLINE_ID as string,",
-				"          OP_CARRIER as string,",
-				"          TAIL_NUM as string,",
-				"          OP_CARRIER_FL_NUM as string,",
-				"          ORIGIN_AIRPORT_ID as string,",
-				"          ORIGIN_AIRPORT_SEQ_ID as string,",
-				"          ORIGIN as string,",
-				"          DEST_AIRPORT_ID as string,",
-				"          DEST_AIRPORT_SEQ_ID as string,",
-				"          DEST as string,",
-				"          DEP_TIME as string,",
-				"          DEP_DEL15 as string,",
-				"          DEP_TIME_BLK as string,",
-				"          ARR_TIME as string,",
-				"          ARR_DEL15 as string,",
-				"          CANCELLED as string,",
-				"          DIVERTED as string,",
-				"          DISTANCE as string",
-				"     ),",
-				"     allowSchemaDrift: true,",
-				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> source2",
 				"source(output(",
 				"          DAY_OF_MONTH as string,",
@@ -131,6 +105,32 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> source3",
+				"source(output(",
+				"          DAY_OF_MONTH as string,",
+				"          DAY_OF_WEEK as string,",
+				"          OP_UNIQUE_CARRIER as string,",
+				"          OP_CARRIER_AIRLINE_ID as string,",
+				"          OP_CARRIER as string,",
+				"          TAIL_NUM as string,",
+				"          OP_CARRIER_FL_NUM as string,",
+				"          ORIGIN_AIRPORT_ID as string,",
+				"          ORIGIN_AIRPORT_SEQ_ID as string,",
+				"          ORIGIN as string,",
+				"          DEST_AIRPORT_ID as string,",
+				"          DEST_AIRPORT_SEQ_ID as string,",
+				"          DEST as string,",
+				"          DEP_TIME as string,",
+				"          DEP_DEL15 as string,",
+				"          DEP_TIME_BLK as string,",
+				"          ARR_TIME as string,",
+				"          ARR_DEL15 as string,",
+				"          CANCELLED as string,",
+				"          DIVERTED as string,",
+				"          DISTANCE as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source4",
 				"union1 select(mapColumn(",
 				"          OP_CARRIER,",
 				"          ORIGIN,",
@@ -149,7 +149,7 @@
 				"          departure_delay_percentage = sum(DEP_DEL15)/count(),",
 				"          arrival_delay_percentage = sum(ARR_DEL15)/count()) ~> aggregate1",
 				"select1 filter(!isNull(DEP_DEL15)&&!isNull(ARR_DEL15)) ~> filter1",
-				"source1, source2, source3 union(byName: true)~> union1",
+				"source2, source3, source4 union(byName: true)~> union1",
 				"filter1 cast(output(",
 				"          DEP_DEL15 as integer '000',",
 				"          ARR_DEL15 as integer '000'",
